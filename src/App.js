@@ -7,9 +7,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
-  const [inpVal, setInpVal] = useState('Bengaluru');
+  const [inpVal, setInpVal] = useState('');
   const [dataObj, setDataObj] = useState(null);
-  const [bg, setBg] = useState();
+  const [bg, setBg] = useState(hotimg);
+  const [render, setRender] = useState(true);
 
   const getData = async () => {
     let returnedData = await getWeatherDetails(inpVal);
@@ -32,51 +33,49 @@ function App() {
     setInpVal('');
   };
 
-  useEffect(() => {
-    getData();
-  }, []);
+  // useEffect(() => {
+  //   getData();
+  // }, []);
 
   return (
     <div className="app" style={{ backgroundImage: `url(${bg})` }}>
       <div className="overlay">
-        {dataObj && (
-          <div className="container">
-            {/* inputs */}
-            <div className="section section__inputs">
-              <input
-                type="text"
-                placeholder="Enter city..."
-                onChange={(e) => {
-                  setInpVal(e.target.value);
-                }}
-                value={inpVal}
-              />
-              <button
-                onClick={() => {
-                  getData();
-                }}
-              >
-                OK
-              </button>
-              <ToastContainer />
-            </div>
-            {/* Description */}
-            <div className="section section__temperature">
-              <div className="description">
-                <h1>
-                  {dataObj.name}, {dataObj.country}
-                </h1>
-                <h2>{Math.round(dataObj.temp)}°C</h2>
-              </div>
-              <div className="temperature">
-                <img src={dataObj.imgIcon} alt="weatherIcon" />
-                <h3>{dataObj.description}</h3>
-              </div>
-            </div>
-            {/* Details */}
-            <Details data={dataObj} />
+        {/* {dataObj && ( */}
+        <div className="container">
+          {/* inputs */}
+          <div className="section section__inputs">
+            <input
+              type="text"
+              placeholder="Enter city..."
+              onChange={(e) => {
+                setInpVal(e.target.value);
+              }}
+              value={inpVal}
+            />
+            <button onClick={() => getData()}>OK</button>
+            <ToastContainer />
           </div>
-        )}
+          {/* Description */}
+          {dataObj && (
+            <div>
+              <div className="section section__temperature">
+                <div className="description">
+                  <h1>
+                    {dataObj.name}, {dataObj.country}
+                  </h1>
+                  <h2>{Math.round(dataObj.temp)}°C</h2>
+                </div>
+                <div className="temperature">
+                  <img src={dataObj.imgIcon} alt="weatherIcon" />
+                  <h3>{dataObj.description}</h3>
+                </div>
+              </div>
+              <Details data={dataObj} />
+            </div>
+          )}
+          {/* Details */}
+          {/* // <Details data={dataObj} /> */}
+        </div>
       </div>
     </div>
   );
