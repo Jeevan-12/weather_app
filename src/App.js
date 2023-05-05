@@ -2,7 +2,7 @@ import hotimg from './images/hot.jpg';
 import coldimg from './images/cold.jpg';
 import Details from './components/Details';
 import getWeatherDetails from './Service';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -10,7 +10,6 @@ function App() {
   const [inpVal, setInpVal] = useState('');
   const [dataObj, setDataObj] = useState(null);
   const [bg, setBg] = useState(hotimg);
-  const [render, setRender] = useState(true);
 
   const getData = async () => {
     let returnedData = await getWeatherDetails(inpVal);
